@@ -1,30 +1,42 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <carousel :slides="slides" :interval="3000" controls indicators @selectedDateChange="handleSelectedDateChange"></carousel>
+  <div class="additional-content">
+    <h2>É indeed uma pergunta</h2>
+    <p v-if="selectedDate === null">Nenhuma data selecionada</p>
+    <p v-else> {{ selectedDate }}</p>
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Carousel from "./components/carousel/Carousel.vue";
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: "App",
+  components: { Carousel },
+  data: () => ({
+    slides: [
+      {
+        title: "Pergunta?",
+        description: "tricky"
+      },
+      {},
+      {},
+      {
+        image: "challenge.png",
+      },
+    ],
+    selectedDate: null
+  }),
+  methods: {
+    handleSelectedDateChange(date) {
+      this.selectedDate = date;
     }
   }
+};
+</script>
+
+<style scoped>
+.additional-content {
+    margin-top: -80px;
 }
 </style>
